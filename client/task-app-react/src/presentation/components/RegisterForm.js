@@ -4,7 +4,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
 
-const LoginForm = (props) => {
+const RegisterForm = (props) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const onLogin = (e) => {
@@ -17,12 +18,13 @@ const LoginForm = (props) => {
     }
     props.onLogin(email, password);
   };
-
+  console.log(name);
+  let nameOnFocus = true;
   return (
     <div className="container">
       <div className="form-container sign-in-container">
         <form onSubmit={onLogin}>
-          <h1>Sign in</h1>
+          <h1>Sign up</h1>
           <div className="social-container">
             <a href="#" className="social">
               <FaFacebookF />
@@ -35,6 +37,19 @@ const LoginForm = (props) => {
             </a>
           </div>
           <span>or use your account</span>
+          <input
+            type="text"
+            placeholder="Full name"
+            value={name}
+            onFocus={() => {
+              nameOnFocus = true;
+              console.log(nameOnFocus);
+            }}
+            onBlur={() => (nameOnFocus = false)}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
           <input
             type="email"
             placeholder="Email"
@@ -58,11 +73,16 @@ const LoginForm = (props) => {
         </form>
       </div>
       <div className="panel-container">
-        <h1 className="greet-panel">Hello, there!</h1>
+        {nameOnFocus ? (
+          <h1 className="greet-panel welcome-text">Welcome, {name}</h1>
+        ) : (
+          <h1 className="greet-panel">Welcome, {name}!</h1>
+        )}
+
         <div className="register-panel">
-          <span>Don't have an account?</span>
-          <Link to="/register">
-            <button className="signup-btn">Sign up</button>
+          <span>Already have an account?</span>
+          <Link to="/login">
+            <button className="signup-btn">Login</button>
           </Link>
         </div>
       </div>
@@ -70,4 +90,4 @@ const LoginForm = (props) => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
