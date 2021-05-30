@@ -1,12 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { FaFacebookF, FaGoogle, FaApple } from "react-icons/fa";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import "./LoginForm.css";
+import { Link, useHistory } from "react-router-dom";
+import "./css/LoginForm.css";
 
 const LoginForm = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const history = useHistory();
   const onLogin = (e) => {
     e.preventDefault();
     if (!email) {
@@ -16,6 +18,7 @@ const LoginForm = (props) => {
       alert("password can't be empty");
     }
     props.onLogin(email, password);
+    history.push("/");
   };
 
   return (
@@ -39,6 +42,7 @@ const LoginForm = (props) => {
             type="email"
             placeholder="Email"
             value={email}
+            autoComplete="email"
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -47,6 +51,7 @@ const LoginForm = (props) => {
             type="password"
             placeholder="Password"
             value={password}
+            autoComplete="current-password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}

@@ -1,0 +1,12 @@
+.hp-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  /* border-radius: 12px; */
+  box-shadow: 4px 8px;
+  background-color: white;
+}
+.hp-container:hover {
+  box-shadow: 2px 2px;
+  transform: translate(2px, 8px);
+}

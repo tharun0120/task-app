@@ -1,14 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { FaFacebookF, FaGoogle, FaApple } from "react-icons/fa";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import "./LoginForm.css";
+import { Link, useHistory } from "react-router-dom";
+import "./css/LoginForm.css";
 
 const RegisterForm = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const onLogin = (e) => {
+  const [nameOnFocus, setNameOnFocus] = useState(false);
+  const history = useHistory();
+  const onRegister = (e) => {
     e.preventDefault();
     if (!email) {
       alert("Email can't be empty");
@@ -16,14 +18,29 @@ const RegisterForm = (props) => {
     if (!password) {
       alert("password can't be empty");
     }
-    props.onLogin(email, password);
+    props.onRegister(name, email, password);
+    history.push("/");
   };
-  console.log(name);
-  let nameOnFocus = true;
+
+  const greet = (name) => {
+    let str = "";
+    if (name.length === 0) {
+      str = "Welcome";
+    }
+    if (name.length > 0) {
+      str = "Welcome, " + name;
+    }
+
+    if (!nameOnFocus) {
+      str = str + "!";
+    }
+    return str;
+  };
+
   return (
     <div className="container">
       <div className="form-container sign-in-container">
-        <form onSubmit={onLogin}>
+        <form onSubmit={onRegister}>
           <h1>Sign up</h1>
           <div className="social-container">
             <a href="#" className="social">
@@ -36,16 +53,18 @@ const RegisterForm = (props) => {
               <FaApple />
             </a>
           </div>
-          <span>or use your account</span>
+          <span>or sign up with email</span>
           <input
             type="text"
             placeholder="Full name"
             value={name}
+            maxLength="20"
             onFocus={() => {
-              nameOnFocus = true;
-              console.log(nameOnFocus);
+              setNameOnFocus(true);
             }}
-            onBlur={() => (nameOnFocus = false)}
+            onBlur={() => {
+              setNameOnFocus(false);
+            }}
             onChange={(e) => {
               setName(e.target.value);
             }}
@@ -66,18 +85,21 @@ const RegisterForm = (props) => {
               setPassword(e.target.value);
             }}
           />
-          <a href="#">Forgot your password?</a>
+          {/* <a href="#">Forgot your password?</a> */}
+          <div style={{ height: 20 }}></div>
           <button type="submit" value="Sign in">
-            Log in
+            Sign up
           </button>
         </form>
       </div>
       <div className="panel-container">
-        {nameOnFocus ? (
-          <h1 className="greet-panel welcome-text">Welcome, {name}</h1>
-        ) : (
-          <h1 className="greet-panel">Welcome, {name}!</h1>
-        )}
+        <div className="greet-panel-container">
+          {nameOnFocus ? (
+            <h1 className="greet-panel welcome-text">{greet(name)}</h1>
+          ) : (
+            <h1 className="greet-panel">{greet(name)}</h1>
+          )}
+        </div>
 
         <div className="register-panel">
           <span>Already have an account?</span>

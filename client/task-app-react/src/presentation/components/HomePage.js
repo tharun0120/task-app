@@ -1,10 +1,25 @@
 import { useHistory } from "react-router-dom";
+import "./css/HomePage.css";
 
-const HomePage = ({ router }) => {
+const HomePage = ({ user, onLogout }) => {
   const history = useHistory();
-  history.push("/login");
 
-  return <></>;
+  if (!user) {
+    history.push("/login");
+    return <></>;
+  }
+
+  const logout = () => {
+    onLogout();
+    history.push("/login");
+  };
+
+  return (
+    <div className="hp-container">
+      <h1>Hello {user.fullName}!</h1>
+      <button onClick={() => logout}>Log out</button>
+    </div>
+  );
 };
 
 export default HomePage;
