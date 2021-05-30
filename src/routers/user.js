@@ -3,7 +3,7 @@ const User = require('../models/users')
 const router = new express.Router()
 const auth = require('../middleware/auth')
 
-router.post("/users", async (req, res) => {
+router.post('api/users', async (req, res) => {
     const user = new User(req.body);
   
     try{
@@ -17,7 +17,7 @@ router.post("/users", async (req, res) => {
     
 })
 
-router.post('/users/login', async (req, res) => {
+router.post('api/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
@@ -27,7 +27,7 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
-router.post('/users/logout', auth, async (req, res) => {
+router.post('api/users/logout', auth, async (req, res) => {
     try{
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token != req.token
@@ -39,7 +39,7 @@ router.post('/users/logout', auth, async (req, res) => {
     }
 })
 
-router.post('/users/logoutall', auth, async (req, res) => {
+router.post('api/users/logoutall', auth, async (req, res) => {
     try{
         req.user.tokens = []
         await req.user.save()
@@ -49,12 +49,12 @@ router.post('/users/logoutall', auth, async (req, res) => {
     }
 })
 
-router.get('/users/me', auth, async (req, res) => {
+router.get('api/users/me', auth, async (req, res) => {
     res.send(req.user)
 
 })
 
-router.patch('/users/me', auth, async (req, res) => {
+router.patch('api/users/me', auth, async (req, res) => {
 
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']
@@ -78,7 +78,7 @@ router.patch('/users/me', auth, async (req, res) => {
     }
 })
 
-router.delete('/users/me', auth, async (req, res) => {
+router.delete('api/users/me', auth, async (req, res) => {
 
     try {
         await req.user.remove()
