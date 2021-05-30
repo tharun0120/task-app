@@ -153,6 +153,7 @@ button:active {
 .greet-panel {
   margin: 0px 0px 48px 0px;
   max-width: 100%;
+  white-space: pre-line;
 }
 
 .greet-panel-container {

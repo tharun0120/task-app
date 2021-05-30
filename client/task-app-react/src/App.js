@@ -10,6 +10,7 @@ function App() {
   const mAuth = new Auth();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const currUser = mAuth.init();
     if (currUser && !user) {
@@ -17,21 +18,25 @@ function App() {
       setUser(foundUser);
     }
     loading && setLoading(false);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loginWithEmail = (email, password) => {
-    let res = mAuth.loginWithEmail(email, password);
+  const loginWithEmail = async (email, password) => {
+    let res = await mAuth.loginWithEmail(email, password);
 
     res.match({
       userAuthenticated: (props) => {
         setUser(props.user);
       },
+      invalidCredentials: () => {
+        alert("Invalid Credentials");
+      },
     });
   };
 
-  const registerNewUser = (name, email, password) => {
-    let res = mAuth.registerNewUser(name, email, password);
+  const registerNewUser = async (name, email, password) => {
+    let res = await mAuth.registerNewUser(name, email, password);
     res.match({
       userAuthenticated: (props) => {
         setUser(props.user);

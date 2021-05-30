@@ -9,17 +9,24 @@ const RegisterForm = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nameOnFocus, setNameOnFocus] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const history = useHistory();
-  const onRegister = (e) => {
+  const onRegister = async (e) => {
     e.preventDefault();
     if (!email) {
       alert("Email can't be empty");
     }
     if (!password) {
       alert("password can't be empty");
+      return;
     }
-    props.onRegister(name, email, password);
-    history.push("/");
+    if (email && password) {
+      setLoading(true);
+      await props.onRegister(name, email, password);
+      setLoading(false);
+      history.push("/");
+    }
   };
 
   const greet = (name) => {
@@ -28,7 +35,7 @@ const RegisterForm = (props) => {
       str = "Welcome";
     }
     if (name.length > 0) {
-      str = "Welcome, " + name;
+      str = "Welcome,\n" + name;
     }
 
     if (!nameOnFocus) {
@@ -36,7 +43,6 @@ const RegisterForm = (props) => {
     }
     return str;
   };
-
   return (
     <div className="container">
       <div className="form-container sign-in-container">
@@ -70,6 +76,7 @@ const RegisterForm = (props) => {
             }}
           />
           <input
+            required
             type="email"
             placeholder="Email"
             value={email}
@@ -78,6 +85,7 @@ const RegisterForm = (props) => {
             }}
           />
           <input
+            required
             type="password"
             placeholder="Password"
             value={password}
@@ -87,7 +95,7 @@ const RegisterForm = (props) => {
           />
           {/* <a href="#">Forgot your password?</a> */}
           <div style={{ height: 20 }}></div>
-          <button type="submit" value="Sign in">
+          <button disabled={loading} type="submit" value="Sign in">
             Sign up
           </button>
         </form>
