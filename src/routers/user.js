@@ -2,9 +2,10 @@ const express = require('express')
 const User = require('../models/users')
 const router = new express.Router()
 const auth = require('../middleware/auth')
+const multer = require('multer')
 
 router.post('/api/users', async (req, res) => {
-    const user = new User(req.body);
+    const user = new User(req.body)
   
     try{
       await user.save()
@@ -86,6 +87,14 @@ router.delete('/api/users/me', auth, async (req, res) => {
     } catch (error) {
         res.status(500).send()
     }
+})
+
+const upload = multer({
+    dest: 'images'
+})
+
+router.post('/user/me/avatar', (req, res) => {
+    
 })
 
 module.exports = router
