@@ -5,7 +5,6 @@ const AuthResponse = union([
   "invalidCredentials",
   "emailAlreadyExist",
 ]);
-
 class Auth {
   Auth() {}
   init() {
@@ -13,33 +12,50 @@ class Auth {
     const user = localStorage.getItem("user");
     return user;
   }
-  registerNewUser(name, email, password) {
-    //mock call to auth api, returns either true or error(email already exist)
-    let res = {
-      user: {
-        uID: "78dsa9f7",
-        fullName: name,
-        email: email,
-        token: "1sdaf6s54f68sd1ngb5",
-      },
+
+  async registerNewUser(name, email, password) {
+    let req = {
+      name: name,
+      email: email,
+      password: password,
     };
-    localStorage.setItem("user", JSON.stringify(res.user));
-    return AuthResponse.userAuthenticated(res);
+    let res = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    });
+    let resJSON = await res.json();
+    console.log(resJSON);
+    if (resJSON.error) {
+      return AuthResponse.emailAlreadyExist();
+    } else {
+      localStorage.setItem("user", JSON.stringify(resJSON));
+      return AuthResponse.userAuthenticated(resJSON);
+    }
   }
 
-  loginWithEmail(email, password) {
-    // mock call to auth api, returns either true or error(invalid cred)
-    let res = {
-      user: {
-        uID: "78dsa9f7",
-        fullName: "Alby",
-        email: email,
-        token: "1sdaf6s54f68sd1ngb5",
-      },
+  async loginWithEmail(email, password) {
+    let req = {
+      email: email,
+      password: password,
     };
-    console.log(res.user);
-    localStorage.setItem("user", JSON.stringify(res.user));
-    return AuthResponse.userAuthenticated(res);
+    let res = await fetch("/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    });
+    let resJSON = await res.json();
+    console.log(resJSON);
+    if (resJSON.error === "Invalid Credentials") {
+      return AuthResponse.invalidCredentials();
+    } else {
+      localStorage.setItem("user", JSON.stringify(resJSON));
+      return AuthResponse.userAuthenticated(resJSON);
+    }
   }
 
   logoutCurrentUser() {

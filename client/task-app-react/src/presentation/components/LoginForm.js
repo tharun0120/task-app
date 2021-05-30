@@ -7,9 +7,11 @@ import "./css/LoginForm.css";
 const LoginForm = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
-  const onLogin = (e) => {
+
+  const onLogin = async (e) => {
     e.preventDefault();
     if (!email) {
       alert("Email can't be empty");
@@ -17,10 +19,13 @@ const LoginForm = (props) => {
     if (!password) {
       alert("password can't be empty");
     }
-    props.onLogin(email, password);
-    history.push("/");
+    if (email && password) {
+      setLoading(true);
+      await props.onLogin(email, password);
+      setLoading(false);
+      history.push("/");
+    }
   };
-
   return (
     <div className="container">
       <div className="form-container sign-in-container">
@@ -57,7 +62,7 @@ const LoginForm = (props) => {
             }}
           />
           <a href="#">Forgot your password?</a>
-          <button type="submit" value="Sign in">
+          <button disabled={loading} type="submit" value="Sign in">
             Log in
           </button>
         </form>

@@ -16,7 +16,7 @@ const HomePage = ({ user, onLogout }) => {
 
   return (
     <div className="hp-container">
-      <h1>Hello {user.fullName}!</h1>
+      <h1>Hello {user.name}!</h1>
       <button onClick={logout}>Log out</button>
     </div>
   );
