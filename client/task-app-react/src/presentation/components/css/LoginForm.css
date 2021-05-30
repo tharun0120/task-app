@@ -145,13 +145,14 @@ button:active {
   height: 100%;
   width: 50%;
   right: 0px;
-  background-image: linear-gradient(45deg, #ff4b2b, #ff416c);
+  background-image: linear-gradient(45deg, #ff6348, #ff164c);
   padding: 50px;
   border-radius: 0px 12px 12px 0px;
 }
 
 .greet-panel {
   margin: 0px 0px 48px 0px;
+  max-width: 100%;
 }
 
 .greet-panel-container {
