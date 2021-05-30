@@ -23,7 +23,7 @@ router.post('/users/login', async (req, res) => {
         const token = await user.generateAuthToken()
         res.send({user, token})
     } catch(error) {
-        res.status(400).send(error)
+        res.status(400).send({error: 'Invalid Credentials'})
     }
 })
 
@@ -54,23 +54,7 @@ router.get('/users/me', auth, async (req, res) => {
 
 })
 
-router.get('/users/:id', auth, async (req, res) => {
-    const _id = req.params.id
-
-    try {
-        const user = await User.findById({_id})
-        if(!user)
-            return res.status(404).send()
-
-        res.status(200).send(user)
-
-    } catch(error) {
-        res.status(500).send(error)
-    }
-
-})
-
-router.patch('/users/:id', auth, async (req, res) => {
+router.patch('/users/me', auth, async (req, res) => {
 
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']
@@ -80,30 +64,25 @@ router.patch('/users/:id', auth, async (req, res) => {
         return res.status(400).send({error: 'Invalid update!'})
 
     try {
-        const user = await User.findById(req.params.id)
 
-        updates.forEach((update) => user[update] = req.body[update] )
-        await user.save()
+        updates.forEach((update) => req.user[update] = req.body[update] )
+        await req.user.save()
 
-        if(!user)
+        if(!req.user)
             return res.status(404).send()
 
-        res.send(user)
+        res.send(req.user)
     } catch(error)
     {
         res.status(400).send(error)
     }
 })
 
-router.delete('/users/:id', auth, async (req, res) => {
+router.delete('/users/me', auth, async (req, res) => {
 
     try {
-        const user = await User.findByIdAndDelete(req.params.id)
-
-        if(!user)
-            return res.status(404).send()
-
-        res.send(user)
+        await req.user.remove()
+        res.send(req.user)
     } catch (error) {
         res.status(500).send()
     }

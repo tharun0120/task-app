@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Task = require('./tasks') 
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -44,6 +45,12 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     }]
+})
+
+userSchema.virtual('tasks', {
+    ref: 'tasks',
+    localField: '_id',
+    foreignField: 'owner'
 })
 
 userSchema.methods.generateAuthToken = async function () {
@@ -94,7 +101,13 @@ userSchema.pre('save', async function (next) {
     next()
 })
 
+//TO delete the tasks after the user profile is removed
+userSchema.pre('remove', async function (next) {
+    const user = this
+    await Task.deleteMany({owner: user._id})
+    next()
+})
+
 const users = mongoose.model('users', userSchema)
 
 module.exports = users
-
