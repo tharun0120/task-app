@@ -5,13 +5,9 @@ const taskRouter = require('./routers/tasks')
 const cors = require('cors')
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
-// //For Maintainence
-// app.use((req, res, next) => {
-//   res.status(503).send('The site is under maintainence')
-  
-// })
+const multer = require('multer')
 
 app.use(express.json());
 
