@@ -5,7 +5,7 @@ const taskRouter = require('./routers/tasks')
 const cors = require('cors')
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 // //For Maintainence
 // app.use((req, res, next) => {
