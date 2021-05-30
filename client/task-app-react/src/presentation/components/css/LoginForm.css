@@ -22,7 +22,7 @@ h1 {
 
 .welcome-text {
   padding-right: 20px;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .welcome-text:after {
@@ -136,6 +136,7 @@ button:active {
 .panel-container {
   position: absolute;
   display: flex;
+
   margin-bottom: 20px;
   flex-direction: column;
   justify-content: center;
@@ -151,6 +152,15 @@ button:active {
 
 .greet-panel {
   margin: 0px 0px 48px 0px;
+}
+
+.greet-panel-container {
+  width: 120%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  word-wrap: break-word;
 }
 
 .register-panel {
