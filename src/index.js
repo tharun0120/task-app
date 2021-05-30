@@ -7,8 +7,6 @@ const cors = require('cors')
 const app = express();
 const port = process.env.PORT || 8080;
 
-const multer = require('multer')
-
 app.use(express.json());
 
 app.use(userRouter)
