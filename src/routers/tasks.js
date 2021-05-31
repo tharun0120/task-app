@@ -43,9 +43,22 @@ router.get('/api/tasks', auth, async (req, res) => {
                 skip: parseInt(req.query.skip),
                 sort
             }
-        }).execPopulate()
-        res.status(200).send(req.user.tasks)
+         }).execPopulate()
+        const tasks = req.user.tasks;
+        let tmpRes = {};
+
+    for (let i = 0; i < tasks.length; i++) {
+        const date = tasks[i].deadline.slice(0,10);
+    if (!tmpRes.hasOwnProperty(date)) {
+        tmpRes[date] = [tasks[i]];
+    } else {
+        console.log(tmpRes)
+      tmpRes[date].push(tasks[i]);
+    }
+  }
+        res.status(200).send(tmpRes)
     } catch(error) {
+        console.log(error)
         res.status(500).send(error)
     }
 
