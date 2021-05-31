@@ -11,6 +11,13 @@ const taskSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    deadline: {
+        type: String,
+        trim: true
+    },
+    prioritise: {
+        type: Boolean
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
