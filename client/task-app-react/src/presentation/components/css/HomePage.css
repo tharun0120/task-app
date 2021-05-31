@@ -1,12 +1,220 @@
-.hp-container {
+@import url("https://fonts.googleapis.com/css?family=Caveat");
+
+body {
+  background: #f6f5f7;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Montserrat", sans-serif;
+  /* height: 100vh; */
+  /* margin: -20px 0 50px; */
+}
+
+/* .App {
+  display: unset;
+} */
+
+#root {
+  width: 80%;
+}
+
+.appbar {
+  background-image: linear-gradient(45deg, #ff6348, #ff164c);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.app-title {
+  padding: 12px 0 0px 8px;
+  color: #fff;
+  font-family: "Caveat";
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.avatar {
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 12px 16px 0 0;
+}
+
+.app-container {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  /* border-radius: 12px; */
-  box-shadow: 4px 8px;
-  background-color: white;
+  align-items: center;
+  width: 100%;
 }
-.hp-container:hover {
-  box-shadow: 2px 2px;
-  transform: translate(2px, 8px);
+
+.hp-container {
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 60px;
+  width: 768px;
+  /* max-width: 100%; */
+}
+
+.card-container {
+  position: relative;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  /* background-color: aqua; */
+  border-radius: 12px;
+  width: 100%;
+}
+
+.card-header {
+  /* background-color: aqua; */
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0px 16px 0px 16px;
+  color: white;
+  background-image: linear-gradient(45deg, #ff6348, #ff164c);
+  border-radius: 12px 12px 0px 0px;
+  margin-bottom: 0px;
+}
+
+.c-info {
+  /* background-color: aquamarine; */
+  display: flex;
+  align-items: baseline;
+  /* margin-right: 100%; */
+}
+
+.c-day {
+  /* background-color: azure; */
+  margin-right: 4px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.c-date {
+  font-weight: 500;
+}
+
+.c-month {
+  /* background-color: black; */
+  margin-top: 0;
+}
+
+.remaing-tasks {
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.addtask-btn {
+  position: absolute;
+  /* background-color: black; */
+  border-color: #f6f5f7;
+  color: #f6f5f7;
+  right: 12px;
+  bottom: -26px;
+  padding: 12px 18px;
+  font-size: 24px;
+  border-radius: 50%;
+  font-weight: 100;
+  z-index: 1;
+}
+
+.solid-divider {
+  /* border-top: 3px solid #bbb; */
+  margin: 0;
+  color: rgb(255, 255, 255);
+}
+
+.add-task-container {
+  /* position: absolute; */
+  background-color: white;
+  border-radius: 0px 0px 12px 12px;
+  padding: 0 12px;
+  margin: 0;
+  width: 100%;
+  padding: 24px 24px;
+  border-radius: 0px 0px 12px 12px;
+}
+
+.tasks-container {
+  background-color: white;
+  padding: 0 12px;
+  margin: 0;
+  width: 100%;
+  padding: 24px 12px;
+  border-radius: 0px 0px 12px 12px;
+}
+
+.task-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 12px;
+  /* background-color: aquamarine; */
+}
+
+.check-text {
+  display: flex;
+  max-width: 80%;
+  align-items: center;
+  justify-content: flex-start;
+  /* justify-content: space-between; */
+  /* background-color: aquamarine; */
+}
+.task-check {
+  margin: 0;
+  width: 20px;
+  color: #ff6348;
+  /* background-color: azure; */
+  /* margin: 10px; */
+}
+
+.task-check {
+  margin: 0;
+  width: 20px;
+  color: #ff6348;
+  background-color: azure;
+  margin-right: 12px;
+}
+
+.task-time {
+  /* background-color: aquamarine; */
+  font-size: 12px;
+  font-weight: 200;
+  color: #333;
+}
+
+.add-form {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 25px;
+  width: 60%;
+  padding-left: 0px;
+  margin-left: 10px;
+}
+
+.form-control {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-field {
+  /* padding: 0; */
+  margin-left: 125px;
+}
+.form-control-check {
+  justify-content: flex-start;
+}
+
+.priorotize-box {
+  width: 7%;
+  margin-left: 80px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
 }

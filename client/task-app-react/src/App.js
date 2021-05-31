@@ -27,7 +27,7 @@ function App() {
 
     res.match({
       userAuthenticated: (props) => {
-        setUser(props.user);
+        setUser(props);
       },
       invalidCredentials: () => {
         alert("Invalid Credentials");
@@ -39,7 +39,7 @@ function App() {
     let res = await mAuth.registerNewUser(name, email, password);
     res.match({
       userAuthenticated: (props) => {
-        setUser(props.user);
+        setUser(props);
       },
     });
   };

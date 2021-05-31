@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 import "./css/HomePage.css";
-
+import TaskCard from "./TaskCard";
+import AppBar from "./AppBar";
 const HomePage = ({ user, onLogout }) => {
   const history = useHistory();
 
@@ -15,9 +16,12 @@ const HomePage = ({ user, onLogout }) => {
   };
 
   return (
-    <div className="hp-container">
-      <h1>Hello {user.name}!</h1>
-      <button onClick={logout}>Log out</button>
+    <div className="app-container">
+      <AppBar />
+      <div className="hp-container">
+        <TaskCard></TaskCard>
+        <button onClick={logout}>Log out</button>
+      </div>
     </div>
   );
 };
