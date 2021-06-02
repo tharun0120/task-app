@@ -1,10 +1,10 @@
 import React from "react";
-import avatar from "./avatar2.png";
-const AppBar = () => {
+import { FaSignOutAlt } from "react-icons/fa";
+const AppBar = ({ logout }) => {
   return (
     <div className="appbar">
       <h1 className="app-title">Task Tracker</h1>
-      <img src={avatar} alt="Avatar" class="avatar"></img>
+      <FaSignOutAlt className="avatar" onClick={logout} />
     </div>
   );
 };

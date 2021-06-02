@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Caveat");
+/* @import url("https://fonts.googleapis.com/css?family=Caveat"); */
 
 body {
   background: #f6f5f7;
@@ -18,7 +18,23 @@ body {
 #root {
   width: 80%;
 }
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .appbar {
   background-image: linear-gradient(45deg, #ff6348, #ff164c);
   border-radius: 12px;
@@ -30,7 +46,7 @@ body {
 .app-title {
   padding: 12px 0 0px 8px;
   color: #fff;
-  font-family: "Caveat";
+  font-family: "Caveat", sans-serif;
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -53,7 +69,8 @@ body {
 .hp-container {
   padding: 20px;
   border-radius: 12px;
-  margin-top: 60px;
+  margin-top: 20px;
+
   width: 768px;
   /* max-width: 100%; */
 }
@@ -62,6 +79,7 @@ body {
   position: relative;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   /* background-color: aqua; */
+  margin-top: 30px;
   border-radius: 12px;
   width: 100%;
 }
@@ -143,15 +161,22 @@ body {
   padding: 0 12px;
   margin: 0;
   width: 100%;
-  padding: 24px 12px;
+  padding: 0px 0px;
+  padding-top: 24px;
+  padding-bottom: 8px;
   border-radius: 0px 0px 12px 12px;
 }
 
 .task-container {
   display: flex;
   justify-content: space-between;
-  padding: 6px 12px;
+  padding: 6px 24px;
+  margin-bottom: 6px;
   /* background-color: aquamarine; */
+}
+
+.task-border {
+  border-left: 2px solid rgb(29, 29, 29);
 }
 
 .check-text {

@@ -1,0 +1,21 @@
+
+
+get /tasks 
+
+task = {
+    date: '30-07'
+}
+
+tasks = [...task]
+
+res = {}
+
+
+for task in tasks
+    if task.date in res.keys
+        res[date].append(task)
+    else
+        res[date] = [task]
+
+ret res
+

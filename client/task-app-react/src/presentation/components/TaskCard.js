@@ -1,18 +1,45 @@
 import Task from "./Task";
 import AddtaskForm from "./AddTaskForm";
 import { useState } from "react";
-const tasks = [
-  { id: 1, text: "Pick up bran from scool", time: "8:00 AM" },
-  { id: 2, text: "Pick up bran from scool", time: "8:00 AM" },
-  { id: 3, text: "Pick up bran from scool", time: "8:00 AM" },
-  { id: 4, text: "Pick up bran from scool", time: "8:00 AM" },
-  { id: 5, text: "Pick up bran from scool", time: "8:00 AM" },
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
-const TaskCard = () => {
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+const TaskCard = ({
+  date,
+  tasks,
+  addTask,
+  updateCompleted,
+  updatePriority,
+}) => {
   const [showForm, setShowForm] = useState(false);
-
+  const day = new Date(date);
   const toggleShowForm = () => {
     setShowForm(!showForm);
+  };
+  const [tasksState, setTasksState] = useState(tasks);
+  const addNewTask = async (task) => {
+    setShowForm(false);
+    await addTask(task);
   };
   return (
     <div>
@@ -20,12 +47,14 @@ const TaskCard = () => {
         <div className="card-header">
           <div className="c-info">
             <div>
-              <h2 className="c-day">Friday, </h2>
-              <p className="c-month">December</p>
+              <h2 className="c-day">{days[day.getDay()]}, </h2>
+              <p className="c-month">{months[day.getMonth()]}</p>
             </div>
-            <h3 className="c-date">10th</h3>
+            <h3 className="c-date">{day.getDate()}th</h3>
           </div>
-          <p className="remaing-tasks">12 tasks</p>
+          <p className="remaing-tasks">
+            {tasksState.length} task{tasks.length > 1 && "s"}
+          </p>
           <button className="addtask-btn" onClick={toggleShowForm}>
             +
           </button>
@@ -33,12 +62,15 @@ const TaskCard = () => {
         {/* <hr className="solid-divider"></hr> */}
         {showForm ? (
           <div className="add-task-container">
-            <AddtaskForm />
+            <AddtaskForm day={day} onAdd={addNewTask} />
           </div>
         ) : (
           <div className="tasks-container">
-            {tasks.map((task) => (
-              <Task key={task.id} task={task} />
+            {tasksState.length === 0 && (
+              <p className="no-task-text">No Tasks to show</p>
+            )}
+            {tasksState.map((tasksState) => (
+              <Task key={tasksState._id} task={tasksState} />
             ))}
           </div>
         )}

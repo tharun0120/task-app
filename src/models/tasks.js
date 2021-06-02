@@ -1,32 +1,35 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
+const mongoose = require("mongoose");
+const validator = require("validator");
 
-const taskSchema = mongoose.Schema({
+const taskSchema = mongoose.Schema(
+  {
     description: {
-        type: String,
-        required: true,
-        trim: true
+      type: String,
+      required: true,
+      trim: true,
     },
     completed: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
     deadline: {
-        type: String,
-        trim: true
+      type: String,
+      trim: true,
     },
-    prioritise: {
-        type: Boolean
+    prioritize: {
+      type: Boolean,
     },
     owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'users'
-    }
-}, {
-    timestamps: true
-})
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "users",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const tasks = mongoose.model('tasks', taskSchema)
+const tasks = mongoose.model("tasks", taskSchema);
 
-module.exports = tasks
+module.exports = tasks;

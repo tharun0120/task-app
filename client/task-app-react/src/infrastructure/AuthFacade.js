@@ -5,11 +5,16 @@ const AuthResponse = union([
   "invalidCredentials",
   "emailAlreadyExist",
 ]);
+
 class Auth {
-  Auth() {}
+  Auth() {
+    this.user = null;
+  }
+
   init() {
     //Initialises authfacade(Checks if the user is already logged in or not)
     const user = localStorage.getItem("user");
+    this.user = JSON.parse(user);
     return user;
   }
 
@@ -27,7 +32,7 @@ class Auth {
       body: JSON.stringify(req),
     });
     let resJSON = await res.json();
-    console.log(resJSON);
+    // console.log(resJSON);
     if (resJSON.error) {
       return AuthResponse.emailAlreadyExist();
     } else {
@@ -49,7 +54,7 @@ class Auth {
       body: JSON.stringify(req),
     });
     let resJSON = await res.json();
-    console.log(resJSON);
+    // console.log(resJSON);
     if (resJSON.error === "Invalid Credentials") {
       return AuthResponse.invalidCredentials();
     } else {
