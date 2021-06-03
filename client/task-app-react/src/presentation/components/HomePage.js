@@ -4,14 +4,13 @@ import "./css/HomePage.css";
 
 import TaskDataStore from "../../infrastructure/TaskDataStore";
 import TaskCard from "./TaskCard";
-import AppBar from "./AppBar";
+import SideDrawer from "./SideDrawer";
 import Loader from "./Loader";
 
 const HomePage = ({ user, onLogout }) => {
   const history = useHistory();
   const mDataStore = new TaskDataStore(user);
   const [tasks, setTasks] = useState();
-
   useEffect(() => {
     if (user) {
       fetchAllTasks();
@@ -19,6 +18,7 @@ const HomePage = ({ user, onLogout }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const logout = () => {
     onLogout();
     history.push("/login");
@@ -34,27 +34,49 @@ const HomePage = ({ user, onLogout }) => {
 
   const addTask = async (task) => {
     const date = task.deadline.slice(0, 10);
-
-    if (!tasks.hasOwnProperty(date)) {
-      tasks[date] = [task];
+    let temp = JSON.parse(JSON.stringify(tasks));
+    if (!temp.hasOwnProperty(date)) {
+      temp[date] = [task];
     } else {
-      tasks[date].push(task);
+      temp[date].push(task);
     }
-    setTasks(tasks);
-    let newtask = await mDataStore.createTask(task);
-    let temp = tasks[newtask.deadline.slice(0, 10)];
-    for (let i = 0; i < temp.length; i++) {
-      if (temp[i]["_id"] == 0) {
-        temp[i]["_id"] = newtask["_id"];
+    const keys = Object.keys(temp);
+    for (let i = 0; i < keys.length; i++) {
+      if (temp[keys[i]].length === 0) {
+        delete temp[keys[i]];
       }
     }
-    tasks[newtask.deadline.slice(0, 10)] = temp;
-    console.log(tasks, temp);
+    setTasks(temp);
+    let newtask = await mDataStore.createTask(task);
+    let tempArr = temp[newtask.deadline.slice(0, 10)];
+    for (let i = 0; i < tempArr.length; i++) {
+      if (tempArr[i]["_id"] === 0) {
+        tempArr[i]["_id"] = newtask["_id"];
+      }
+    }
+    temp[newtask.deadline.slice(0, 10)] = tempArr;
+    setTasks(temp);
   };
 
-  const updateCompleted = async () => {};
+  const updateTaskServer = (props) => {
+    mDataStore.updateTask(props);
+  };
 
-  const updatePriority = async () => {};
+  const deleteTaskServer = (date, id) => {
+    mDataStore.deleteTask(id);
+    let temp = [];
+    for (let i = 0; i < tasks[date].length; i++) {
+      if (tasks[date][i]._id !== id) {
+        temp.push(tasks[date][i]);
+      }
+    }
+    tasks[date] = temp;
+    if (temp.length === 0 && Object.keys(tasks).length > 1) {
+      const tmp = JSON.parse(JSON.stringify(tasks));
+      delete tmp[date];
+      setTasks(tmp);
+    }
+  };
 
   if (!user) {
     history.push("/login");
@@ -63,17 +85,9 @@ const HomePage = ({ user, onLogout }) => {
     return <Loader />;
   }
 
-  // const tasksComponent = (tasks) => {
-  //   for (var key in tasks) {
-  //     if(tasks.hasOwnProperty(key)) {
-
-  //     }
-  //   }
-  // }
-
   return (
     <div className="app-container">
-      <AppBar logout={logout} />
+      <SideDrawer logout={logout} />
       <div className="hp-container">
         {Object.keys(tasks).map((date) => {
           return (
@@ -83,8 +97,8 @@ const HomePage = ({ user, onLogout }) => {
               date={date}
               tasks={tasks[date]}
               addTask={addTask}
-              updateCompleted={updateCompleted}
-              updatePriority={updatePriority}
+              updateTaskServer={updateTaskServer}
+              deleteTaskServer={deleteTaskServer}
             />
           );
         })}

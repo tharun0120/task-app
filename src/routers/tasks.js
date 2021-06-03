@@ -8,7 +8,6 @@ router.post("/api/tasks", auth, async (req, res) => {
     ...req.body,
     owner: req.user._id,
   });
-  console.log(req.body);
   try {
     await task.save();
     res.status(201).send(task);
@@ -53,13 +52,11 @@ router.get("/api/tasks", auth, async (req, res) => {
       if (!tmpRes.hasOwnProperty(date)) {
         tmpRes[date] = [tasks[i]];
       } else {
-        console.log(tmpRes);
         tmpRes[date].push(tasks[i]);
       }
     }
     res.status(200).send(tmpRes);
   } catch (error) {
-    console.log(error);
     res.status(500).send(error);
   }
 });
@@ -79,7 +76,8 @@ router.get("/api/tasks/:id", auth, async (req, res) => {
 
 router.patch("/api/tasks/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["description", "completed"];
+  console.log(updates);
+  const allowedUpdates = ["description", "completed", "priorotize"];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );

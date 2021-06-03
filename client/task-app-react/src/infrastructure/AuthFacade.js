@@ -7,13 +7,11 @@ const AuthResponse = union([
 ]);
 
 class Auth {
-  Auth() {
-    this.user = null;
-  }
-
+  user;
   init() {
     //Initialises authfacade(Checks if the user is already logged in or not)
     const user = localStorage.getItem("user");
+
     this.user = JSON.parse(user);
     return user;
   }
@@ -32,11 +30,11 @@ class Auth {
       body: JSON.stringify(req),
     });
     let resJSON = await res.json();
-    // console.log(resJSON);
     if (resJSON.error) {
       return AuthResponse.emailAlreadyExist();
     } else {
       localStorage.setItem("user", JSON.stringify(resJSON));
+      this.user = resJSON;
       return AuthResponse.userAuthenticated(resJSON);
     }
   }
@@ -54,17 +52,25 @@ class Auth {
       body: JSON.stringify(req),
     });
     let resJSON = await res.json();
-    // console.log(resJSON);
     if (resJSON.error === "Invalid Credentials") {
       return AuthResponse.invalidCredentials();
     } else {
       localStorage.setItem("user", JSON.stringify(resJSON));
+      this.user = resJSON;
+
       return AuthResponse.userAuthenticated(resJSON);
     }
   }
 
   logoutCurrentUser() {
     localStorage.removeItem("user");
+    fetch("/api/users/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.user.token,
+      },
+    });
   }
 }
 

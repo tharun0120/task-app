@@ -9,6 +9,7 @@ const AddTaskForm = ({ day, onAdd }) => {
   const onSubmit = () => {
     if (!taskText) {
       alert("Task field can't be empty");
+      return;
     }
     onAdd({
       _id: 0,

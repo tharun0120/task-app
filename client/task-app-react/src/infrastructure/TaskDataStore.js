@@ -4,7 +4,6 @@ class TaskDataStore {
   }
 
   async fetchAllTasks() {
-    // console.log(this.user);
     let res = await fetch("/api/tasks", {
       method: "GET",
       headers: {
@@ -29,6 +28,25 @@ class TaskDataStore {
 
     let resJSON = await res.json();
     return resJSON;
+  }
+  updateTask({ id, prop, value }) {
+    fetch("/api/tasks/" + id, {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + this.user.token,
+      },
+      body: JSON.stringify({ [prop]: value }),
+    });
+  }
+  deleteTask(id) {
+    fetch("/api/tasks/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + this.user.token,
+      },
+    });
   }
 }
 

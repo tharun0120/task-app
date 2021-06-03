@@ -10,7 +10,10 @@ const LoginForm = (props) => {
   const [loading, setLoading] = useState(false);
 
   const history = useHistory();
-
+  if (props.currUser) {
+    history.push("/");
+    return <></>;
+  }
   const onLogin = async (e) => {
     e.preventDefault();
     if (!email) {
@@ -26,6 +29,7 @@ const LoginForm = (props) => {
       history.push("/");
     }
   };
+
   return (
     <div className="container">
       <div className="form-container sign-in-container">

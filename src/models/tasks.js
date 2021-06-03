@@ -16,8 +16,9 @@ const taskSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-    prioritize: {
+    priorotize: {
       type: Boolean,
+      default: false,
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,

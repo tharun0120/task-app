@@ -1,17 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Auth from "./infrastructure/AuthFacade";
 import LoginForm from "./presentation/components/LoginForm";
 import RegisterForm from "./presentation/components/RegisterForm";
 import HomePage from "./presentation/components/HomePage";
-import LoadingScreen from "./presentation/components/LoadingScreen";
+import Loader from "./presentation/components/Loader";
 
 function App() {
-  const mAuth = new Auth();
+  const mAuthRef = useRef();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const mAuth = new Auth();
+    mAuthRef.current = mAuth;
     const currUser = mAuth.init();
     if (currUser && !user) {
       const foundUser = JSON.parse(currUser);
@@ -23,7 +25,7 @@ function App() {
   }, []);
 
   const loginWithEmail = async (email, password) => {
-    let res = await mAuth.loginWithEmail(email, password);
+    let res = await mAuthRef.current.loginWithEmail(email, password);
 
     res.match({
       userAuthenticated: (props) => {
@@ -36,7 +38,7 @@ function App() {
   };
 
   const registerNewUser = async (name, email, password) => {
-    let res = await mAuth.registerNewUser(name, email, password);
+    let res = await mAuthRef.current.registerNewUser(name, email, password);
     res.match({
       userAuthenticated: (props) => {
         setUser(props);
@@ -44,7 +46,7 @@ function App() {
     });
   };
   const logoutUser = () => {
-    mAuth.logoutCurrentUser();
+    mAuthRef.current.logoutCurrentUser();
     setUser();
   };
 
@@ -53,12 +55,18 @@ function App() {
       <Router>
         <Switch>
           <Route path="/register">
-            <RegisterForm onRegister={registerNewUser} />
+            <RegisterForm onRegister={registerNewUser} currUser={user} />
           </Route>
           <Route path="/login">
-            <LoginForm onLogin={loginWithEmail} />
+            <LoginForm onLogin={loginWithEmail} currUser={user} />
           </Route>
-
+          <Route
+            path="/about"
+            component={() => {
+              window.location.href = "https://example.com/1234";
+              return null;
+            }}
+          />
           <Route path="/">
             <SplashScreen
               loading={loading}
@@ -74,7 +82,7 @@ function App() {
 
 const SplashScreen = ({ loading, user, logoutUser }) => {
   if (loading) {
-    return <LoadingScreen />;
+    return <Loader />;
   }
   return <HomePage user={user} onLogout={logoutUser} />;
 };

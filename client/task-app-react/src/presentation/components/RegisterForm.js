@@ -5,13 +5,17 @@ import { Link, useHistory } from "react-router-dom";
 import "./css/LoginForm.css";
 
 const RegisterForm = (props) => {
+  const history = useHistory();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nameOnFocus, setNameOnFocus] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const history = useHistory();
+  if (props.currUser) {
+    history.push("/");
+    return <></>;
+  }
   const onRegister = async (e) => {
     e.preventDefault();
     if (!email) {
@@ -43,6 +47,7 @@ const RegisterForm = (props) => {
     }
     return str;
   };
+
   return (
     <div className="container">
       <div className="form-container sign-in-container">
