@@ -26,24 +26,26 @@ function App() {
 
   const loginWithEmail = async (email, password) => {
     let res = await mAuthRef.current.loginWithEmail(email, password);
-
+    console.log(res);
     res.match({
       userAuthenticated: (props) => {
         setUser(props);
       },
-      invalidCredentials: () => {
-        alert("Invalid Credentials");
-      },
+      invalidCredentials: () => {},
     });
+    return res;
   };
 
   const registerNewUser = async (name, email, password) => {
     let res = await mAuthRef.current.registerNewUser(name, email, password);
+
     res.match({
       userAuthenticated: (props) => {
         setUser(props);
       },
+      emailAlreadyExist: () => {},
     });
+    return res;
   };
   const logoutUser = () => {
     mAuthRef.current.logoutCurrentUser();

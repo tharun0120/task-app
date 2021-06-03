@@ -24,9 +24,17 @@ const LoginForm = (props) => {
     }
     if (email && password) {
       setLoading(true);
-      await props.onLogin(email, password);
-      setLoading(false);
-      history.push("/");
+      const res = await props.onLogin(email, password);
+      res.match({
+        invalidCredentials: () => {
+          setLoading(false);
+          alert("Invalid Credentials");
+        },
+        userAuthenticated: () => {
+          setLoading(false);
+          history.push("/");
+        },
+      });
     }
   };
 

@@ -1,4 +1,3 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useState } from "react";
 
 const SideDrawer = ({ logout }) => {
@@ -7,7 +6,10 @@ const SideDrawer = ({ logout }) => {
     setShowDrawer(!showDrawer);
   };
   return (
-    <div className={showDrawer ? "side-drawer open" : "side-drawer"}>
+    <div
+      onClick={toggleDrawer}
+      className={showDrawer ? "side-drawer open" : "side-drawer"}
+    >
       <div className="drawer-header">
         <div className="drawer-title">
           <h1 className="app-title l3">Task Tracker</h1>

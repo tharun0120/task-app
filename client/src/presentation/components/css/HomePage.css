@@ -44,7 +44,7 @@ body {
   border-radius: 24px;
   position: fixed;
   /* margin-right: 10px; */
-  top: 10%;
+  top: 24px;
   left: 16px;
   width: 70%;
   max-width: 280px;
@@ -55,10 +55,15 @@ body {
   transition: transform 0.3s ease-out;
 }
 
+.side-drawer:hover {
+  z-index: 2;
+}
+
 .side-drawer.open {
   transform: translateX(0);
   z-index: 2;
 }
+
 .drawer-header {
   display: flex;
   justify-content: space-between;
@@ -72,7 +77,7 @@ body {
   transform: rotate(180deg);
   margin-right: 12px;
   cursor: pointer;
-
+  -webkit-tap-highlight-color: transparent;
   transition: transform 0.3s linear;
 }
 
@@ -215,6 +220,8 @@ body {
   border-radius: 50%;
   font-weight: 100;
   z-index: 1;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .addtask-anim {
@@ -229,7 +236,7 @@ body {
 
 .add-task-container {
   /* position: absolute; */
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   border-radius: 0px 0px 12px 12px;
   padding: 0 12px;
   margin: 0;
@@ -288,6 +295,8 @@ body {
   margin: 0;
   width: 20px;
   color: #ff6348;
+
+  -webkit-tap-highlight-color: transparent;
   /* background-color: azure; */
   /* margin: 10px; */
 }
@@ -320,22 +329,28 @@ body {
 .add-form {
   display: flex;
   align-items: flex-start;
-  padding: 0 25px;
-  width: 60%;
+  padding: 0 0;
+  margin: 0;
+  /* min-width: 60%; */
   padding-left: 0px;
   margin-left: 10px;
 }
 
 .form-control {
+  /* background-color: #333; */
   display: flex;
   width: 100%;
+  /* min-width: 300px; */
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
 .task-field {
   /* padding: 0; */
-  margin-left: 125px;
+  /* margin: 0; */
+  /* margin-left: 125px; */
+  max-width: 218px;
 }
 .form-control-check {
   justify-content: flex-start;

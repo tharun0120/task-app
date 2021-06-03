@@ -31,9 +31,17 @@ const RegisterForm = (props) => {
     }
     if (email && password) {
       setLoading(true);
-      await props.onRegister(name, email, password);
-      setLoading(false);
-      history.push("/");
+      const res = await props.onRegister(name, email, password);
+      res.match({
+        emailAlreadyExist: () => {
+          setLoading(false);
+          alert("Entered email already exist.");
+        },
+        userAuthenticated: () => {
+          setLoading(false);
+          history.push("/");
+        },
+      });
     }
   };
 

@@ -40,7 +40,9 @@ const AddTaskForm = ({ day, onAdd }) => {
             initialValue={deadline}
             initialViewMode="time"
             onChange={(e) => {
-              setDeadline(e.toDate());
+              try {
+                setDeadline(e.toDate());
+              } catch (err) {}
             }}
           />
         </div>

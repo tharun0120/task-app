@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const Task = ({ task, onUpdate, onDelete }) => {
   const time = new Date(task.deadline);
 

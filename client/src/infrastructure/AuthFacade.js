@@ -11,9 +11,11 @@ class Auth {
   init() {
     //Initialises authfacade(Checks if the user is already logged in or not)
     const user = localStorage.getItem("user");
-
-    this.user = JSON.parse(user);
-    return user;
+    if (user && JSON.parse(user).token) {
+      this.user = JSON.parse(user);
+      return user;
+    }
+    return null;
   }
 
   async registerNewUser(name, email, password) {
@@ -30,7 +32,7 @@ class Auth {
       body: JSON.stringify(req),
     });
     let resJSON = await res.json();
-    if (resJSON.error) {
+    if (resJSON.keyValue.email) {
       return AuthResponse.emailAlreadyExist();
     } else {
       localStorage.setItem("user", JSON.stringify(resJSON));
