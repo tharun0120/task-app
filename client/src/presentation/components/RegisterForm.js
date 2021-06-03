@@ -22,7 +22,11 @@ const RegisterForm = (props) => {
       alert("Email can't be empty");
     }
     if (!password) {
-      alert("password can't be empty");
+      alert("Password can't be empty");
+      return;
+    }
+    if (password.length < 7) {
+      alert("Password has to be atleast 7 characters long");
       return;
     }
     if (email && password) {
@@ -54,13 +58,13 @@ const RegisterForm = (props) => {
         <form onSubmit={onRegister}>
           <h1>Sign up</h1>
           <div className="social-container">
-            <a href="#" className="social">
+            <a href="" className="social">
               <FaFacebookF />
             </a>
-            <a href="#" className="social">
+            <a href="" className="social">
               <FaGoogle />
             </a>
-            <a href="#" className="social">
+            <a href="" className="social">
               <FaApple />
             </a>
           </div>
@@ -70,6 +74,7 @@ const RegisterForm = (props) => {
             placeholder="Full name"
             value={name}
             maxLength="20"
+            autoComplete="name"
             onFocus={() => {
               setNameOnFocus(true);
             }}
@@ -85,6 +90,7 @@ const RegisterForm = (props) => {
             type="email"
             placeholder="Email"
             value={email}
+            autoComplete="email"
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -94,6 +100,7 @@ const RegisterForm = (props) => {
             type="password"
             placeholder="Password"
             value={password}
+            autoComplete="new-password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}

@@ -94,7 +94,7 @@ const TaskCard = ({
               <h2 className="c-day">{days[day.getDay()]}, </h2>
               <p className="c-month">{months[day.getMonth()]}</p>
             </div>
-            <h3 className="c-date">{day.getDate()}th</h3>
+            <h3 className="c-date">{day.getDate()}</h3>
           </div>
           <p className="remaing-tasks">
             {tasksState.length} task{tasks.length > 1 && "s"}
