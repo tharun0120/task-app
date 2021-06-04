@@ -4,7 +4,9 @@ import { useState } from "react";
 import "react-datetime/css/react-datetime.css";
 const AddTaskForm = ({ day, onAdd }) => {
   const [taskText, setTaskText] = useState("");
-  const [deadline, setDeadline] = useState(day);
+  const [deadline, setDeadline] = useState(
+    new Date(new Date(day).getTime() + 25 * 60 * 60 * 500)
+  );
   const [priority, setPriority] = useState(false);
   const onSubmit = () => {
     if (!taskText) {
@@ -30,6 +32,7 @@ const AddTaskForm = ({ day, onAdd }) => {
           <input
             className="task-field"
             type="text"
+            placeholder="Task description"
             value={taskText}
             onChange={(e) => setTaskText(e.target.value)}
           />
