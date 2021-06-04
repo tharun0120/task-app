@@ -32,7 +32,7 @@ class Auth {
       body: JSON.stringify(req),
     });
     let resJSON = await res.json();
-    if (resJSON.keyValue.email) {
+    if (resJSON.keyValue && resJSON.keyValue.email) {
       return AuthResponse.emailAlreadyExist();
     } else {
       localStorage.setItem("user", JSON.stringify(resJSON));

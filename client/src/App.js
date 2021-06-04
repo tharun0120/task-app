@@ -26,7 +26,6 @@ function App() {
 
   const loginWithEmail = async (email, password) => {
     let res = await mAuthRef.current.loginWithEmail(email, password);
-    console.log(res);
     res.match({
       userAuthenticated: (props) => {
         setUser(props);
