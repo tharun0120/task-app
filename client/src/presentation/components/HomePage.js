@@ -25,11 +25,21 @@ const HomePage = ({ user, onLogout }) => {
   };
 
   const fetchAllTasks = async () => {
-    let tasks = await mDataStore.fetchAllTasks();
-    if (Object.keys(tasks).length === 0) {
-      tasks[new Date().toJSON().slice(0, 10)] = [];
-    }
-    setTasks(tasks);
+    let res = await mDataStore.fetchAllTasks();
+
+    res.match({
+      tasks: (props) => {
+        let tasks = props.resJSON;
+        if (Object.keys(tasks).length === 0) {
+          tasks[new Date().toJSON().slice(0, 10)] = [];
+        }
+        setTasks(tasks);
+      },
+      invalidToken: () => {
+        alert("Please login again.");
+        logout();
+      },
+    });
   };
 
   const addTask = async (task) => {

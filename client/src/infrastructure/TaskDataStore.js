@@ -1,3 +1,7 @@
+import union from "../core/union";
+
+const DataStoreResponse = union(["tasks", "invalidToken"]);
+
 class TaskDataStore {
   constructor(user) {
     this.user = user;
@@ -12,7 +16,10 @@ class TaskDataStore {
       },
     });
     let resJSON = await res.json();
-    return resJSON;
+    if (resJSON.error === "Please Authenticate") {
+      return DataStoreResponse.invalidToken(resJSON);
+    }
+    return DataStoreResponse.tasks(resJSON);
   }
 
   async createTask(task) {
