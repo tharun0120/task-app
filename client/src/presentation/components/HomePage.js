@@ -29,7 +29,7 @@ const HomePage = ({ user, onLogout }) => {
 
     res.match({
       tasks: (props) => {
-        let tasks = props.resJSON;
+        let tasks = props;
         if (Object.keys(tasks).length === 0) {
           tasks[new Date().toJSON().slice(0, 10)] = [];
         }
