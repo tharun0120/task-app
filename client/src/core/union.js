@@ -9,4 +9,8 @@ const union = (types) =>
     {}
   );
 
+const someRandomFunction = () => {
+  //123456789
+};
+
 export default union;
