@@ -10,7 +10,7 @@ const union = (types) =>
   );
 
 const someRandomFunction = () => {
-  //123456789
+  //xyz
 };
 
 export default union;
